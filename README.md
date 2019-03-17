@@ -9,12 +9,31 @@ vs插件项目，一个基于T4的模板生成器
   1.目前只支持sqlserver 数据库。<br>
   2.T4模板并未集成到软件中，需要另外添加。<br>
 
-## 三、软件界面：
-
+## 三、软件界面及使用说明：
+  1.在VS解决项目浏览器中选择要添加代码的文件夹，右键弹出菜单，选择代码生成。<br>
+![界面图片](https://github.com/wmz46/Olive.CodeBuilder/blob/master/doc/images/readme_2.png)<br>
+  2.弹出以下窗口，输入数据库连接字符串，点击“载入数据库”按钮。点击“选择文件夹”，选择T4模板所在文件夹，并点击“载入T4模板”，最后勾选要生成的表和模板，点击“生成代码”即可。表和视图右侧的输入框在输入后，会实时根据字符串模糊匹配过滤掉多余表及视图（不区分大小写）。<br>
 ![界面图片](https://github.com/wmz46/Olive.CodeBuilder/blob/master/doc/images/readme_1.png)
 
 ## 四、参数说明：
-```  Java
+  以下为T4模板示例，其中：<br>
+  1.hostspecific="true" 必须使用Host传递参数。<br>
+  2.Host参数如下，--表示从属Columns下的字段名<br>
+
+
+| 参数名    | 类型       | 说明               |
+| ------------- |:-------------:| :-----:|
+| TableName | string    | 完整表名           |
+| NameSpace | string    |选中文件夹的命名空间 |
+| Columns   | DataTable | 列信息             |
+|   --ColumnName| DataTable | 列名             |
+|    --TypeName   | DataTable | 字段类型             |
+|    --cisNull   | DataTable | √表示可为空             |
+|    --CharLength   | DataTable | 字段长度             |
+|    --isPK   | DataTable | √表示主键            |
+|    --IsIdentity   | string | √表示自增             |
+|    --DeText   | string | 字段中文备注             |
+```  C#
 <#@ template hostspecific="true" debug="true" #>
 <#@output extension=".cs"#>  
 <# 
@@ -39,15 +58,14 @@ namespace <#=host.NameSpace#>
 	var columnName = item["ColumnName"].ToString();
 	var cisNull = (item["cisNull"].ToString()=="√");
 	var typeName = item["TypeName"].ToString();
-	if(typeName == "varchar"){
-		typeName = "string";
-	}else if(typeName == "datetime"){
-		typeName = "DateTime";
-	}
+	var dbText = item["DeText"].ToString();	
 	if(cisNull && typeName!="string"){
 		typeName += "?";
 	}
 #>
+                /// <summary>
+		/// <#=dbText#>
+		/// </summary>
 <#if(!cisNull){#>
 		[Required]
 <#}#>
