@@ -8,3 +8,4 @@ vs插件项目，一个基于T4的模板生成器
   2.T4模板并未集成到软件中，需要另外添加。
 ##参数说明：
 ##软件界面：
+![界面图片](https://github.com/wmz46/Olive.CodeBuilder/blob/master/doc/images/readme_1.png)
