@@ -24,11 +24,11 @@ vs插件项目，一个基于T4的模板生成器
 | TableName | string    | 完整表名           |
 | NameSpace | string    |选中文件夹的命名空间 |
 | Columns   | DataTable | 列信息             |
-|   --ColumnName| DataTable | 列名             |
-|    --TypeName   | DataTable | 字段类型，对应c#中的类型            |
-|    --cisNull   | DataTable | √表示可为空             |
-|    --CharLength   | DataTable | 字段长度             |
-|    --isPK   | DataTable | √表示主键            |
+|   --ColumnName| string | 列名             |
+|    --TypeName   | string | 字段类型，对应c#中的类型            |
+|    --cisNull   | string | √表示可为空             |
+|    --CharLength   | int | 字段长度             |
+|    --isPK   | string | √表示主键            |
 |    --IsIdentity   | string | √表示自增             |
 |    --DeText   | string | 字段中文备注             |
 
